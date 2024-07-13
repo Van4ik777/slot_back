@@ -2,7 +2,7 @@ import random
 
 def spin_slot_machine_logic(initial_money, stavka):
     symbols = [1, 2, 3, 4, 5, 6, 7, 'w', 'b']
-    weights = [100, 100, 100, 100, 50, 50, 20, 5, 20]
+    weights = [100, 100, 100, 100, 50, 50, 20, 5, 200]
 
     l1 = [random.choices(symbols, weights=weights)[0] for _ in range(3)]
     l2 = [random.choices(symbols, weights=weights)[0] for _ in range(3)]
@@ -22,8 +22,16 @@ def spin_slot_machine_logic(initial_money, stavka):
 
     if bonus_count >= 3:
         bonus_spins = {3: 8, 4: 10, 5: 12, 6: 12, 7: 12, 8: 12, 9: 12}.get(bonus_count, 0)
-        return {'message': f'You won {bonus_spins} BONUS GAMES'}
-
+        return {
+            "l1": l1,
+            "l2": l2,
+            "l3": l3,
+            "money": money,
+            "winning_lines": None,
+            "multiplier": None,
+            "message": bonus_spins
+        }
+    
     def check_and_replace(f, s, t):
         nonlocal money, multiplier
         symbols_set = {l1[f], l2[s], l3[t]}
